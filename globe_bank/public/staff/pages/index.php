@@ -20,7 +20,7 @@ $pages = [
 
         <div class="actions">
             <!--this is a link to create new subjects-->
-            <a class="action" href="">Create New Page</a>
+            <a class="action" href="<?php echo url_for('/staff/pages/new.php') ;?>">Create New Page</a>
         </div>
 
         <table class="list">
@@ -42,7 +42,7 @@ $pages = [
                 <td><?php echo $pages['visible'] == 1 ? 'true' : 'false'; ?></td>
                 <td><?php echo h($pages['menu_name']); ?></td>
                 <td><a class="action" href="<?php echo url_for('/staff/pages/show.php?id=' . h(u($pages['id']))); ?>">View</a></td>
-                <td><a class="action" href="">Edit</a></td>
+                <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($pages['id']))); ?>">Edit</a></td>
                 <td><a class="action" href="">Delete</a></td>
             </tr>
             <?php } ?>

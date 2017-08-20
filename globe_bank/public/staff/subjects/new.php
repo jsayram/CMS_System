@@ -49,7 +49,7 @@ if($test == '404'){
                 <dt>Visible</dt>
                 <dd>
                     <input type="hidden" name="visible" value="0" />
-                    <input type="checkbox" name="visible" value="1" />
+                    <input type="checkbox" name="visible" value="1"/>
                 </dd>
             </dl>
             <div id="operations">

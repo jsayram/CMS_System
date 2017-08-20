@@ -1,33 +1,13 @@
 <!--this is needed so we can use the functions crated-->
 <?php
 require_once('../../../private/initialize.php');
-//this tenary operator is used for PHP < 7.0
-$test = isset($_GET['test']) ? $_GET['test']: '';
-//tenary operator used after PHP >=7.0
-//$test = $_GET['test'] ??  '';
-
-
-/* This is code for testing the error messages*/
-//if($test == '404'){
-//    //custom function created
-//    error_404();
-//}elseif($test == '500'){
-//    //custom function created
-//    error_500();
-//}elseif($test == 'redirect'){
-//    //page redirection using the custom function
-//    redirect_to(url_for('/staff/subjects/index.php'));
-//}
-//else{
-//    //echo 'No Error';
-//}
 
 
 //We need to have a variable for the ID. So we need something that's going to read that in.So in every case, not just when it's a post request, we're always to want to have ID equals and get ID. Now if ID's not set, we know we could do something like this
 
 //if is not set then go back to the index.php
 if(!isset($_GET['id'])){
-    redirect_to(url_for('/staff/subjects/index.php'));
+    redirect_to(url_for('/staff/pages/index.php'));
 }
 $id = $_GET['id'];
 
@@ -62,27 +42,22 @@ if(is_post_request()){
     echo "Visible: " . $visible . "<br />";
 }
 
-//dont need this else statement but know is an option to use
-//else{
-//
-//    //redirect_to(url_for('/staff/subjects/new.php'));
-//}
-
 
 ;?>
 
 
-<?php $page_title = 'Edit Subject'; ?>
+
+<?php $page_title = 'Edit Page'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <div id="content">
 
-    <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
+    <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a>
 
-    <div class="subject edit">
-        <h1>Edit Subject</h1>
+    <div class="Page edit">
+        <h1>Edit Page</h1>
 
-        <form action="<?php echo url_for('/staff/subjects/edit.php?id=') . h(u($id)); ?>" method="post">
+        <form action="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($id))) ;?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
                 <dd><input type="text" name="menu_name" value="<?php echo h($menu_name) ;?>" /></dd>
@@ -91,7 +66,7 @@ if(is_post_request()){
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-                        <option value="1"<?php if($position == "1") {echo " selected";} ?>>1</option>
+                        <option value="1"<?php if($position == "1") {echo " selected";} ?> >1</option>
                     </select>
                 </dd>
             </dl>
@@ -99,11 +74,11 @@ if(is_post_request()){
                 <dt>Visible</dt>
                 <dd>
                     <input type="hidden" name="visible" value="0" />
-                    <input type="checkbox" name="visible" value="1"<?php if($visible == "1") {echo " checked";} ?> />
+                    <input type="checkbox" name="visible" value="1" <?php if($visible == "1") {echo " checked";} ?> />
                 </dd>
             </dl>
             <div id="operations">
-                <input type="submit" value="Edit Subject" />
+                <input type="submit" value="Edit Page" />
             </div>
         </form>
 
@@ -112,3 +87,4 @@ if(is_post_request()){
 </div>
 
 <?php include(SHARED_PATH . '/staff_footer.php'); ?>
+
