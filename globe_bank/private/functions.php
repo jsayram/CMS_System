@@ -40,11 +40,20 @@
         exit();
     }
 
+   //used for redirecting to another location
     function redirect_to($location){
         header("Location: " . $location);
         exit();
     }
 
+    //functions for checking if is a get request or post request, used for conditions inside the forms, this will issure we respod appropirately if the user refreshes a form page that it does the approprite action
+    function is_post_request(){
+        return $_SERVER['REQUEST_METHOD'] == 'POST';
+    }
+
+    function is_get_request(){
+        return $_SERVER['REQUEST_METHOD'] == 'GET';
+    }
 
 
 ?>

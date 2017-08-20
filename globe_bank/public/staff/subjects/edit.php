@@ -6,19 +6,69 @@ $test = isset($_GET['test']) ? $_GET['test']: '';
 //tenary operator used after PHP >=7.0
 //$test = $_GET['test'] ??  '';
 
-if($test == '404'){
-    //custom function created
-    error_404();
-}elseif($test == '500'){
-    //custom function created
-    error_500();
-}elseif($test == 'redirect'){
-    //page redirection using the custom function
-    redirect_to(url_for('/staff/subjects/index.php'));
-}
+
+/* This is code for testing the error messages*/
+//if($test == '404'){
+//    //custom function created
+//    error_404();
+//}elseif($test == '500'){
+//    //custom function created
+//    error_500();
+//}elseif($test == 'redirect'){
+//    //page redirection using the custom function
+//    redirect_to(url_for('/staff/subjects/index.php'));
+//}
 //else{
 //    //echo 'No Error';
 //}
+
+
+//We need to have a variable for the ID. So we need something that's going to read that in.So in every case, not just when it's a post request, we're always to want to have ID equals and get ID. Now if ID's not set, we know we could do something like this
+
+//if is not set then go back to the index.php
+if(!isset($_GET['id'])){
+    redirect_to(url_for('/staff/subjects/index.php'));
+}
+$id = $_GET['id'];
+
+//make sure that when ever working with forms thares always default values
+//menuName, postion , and visible default values
+$menu_name = '';
+$position = '';
+$visible = '';
+
+
+
+//this processes the information if its present if not it will display the page
+if(is_post_request()){
+
+    // Handle form values sent by new.php
+
+    //tenary operators for can be used for php >-7.0
+    //$menu_name = $_POST['menu_name'] ?? '';
+    //$position = $_POST['position'] ?? '';
+    //$visible = $_POST['visible'] ?? '';
+
+
+    //tenary operators used for php <7.0
+    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name']: '';
+    $position = isset($_POST['position']) ? $_POST['position']: '';
+    $visible = isset($_POST['visible']) ? $_POST['visible']: '';
+
+
+    echo "Form parameters<br />";
+    echo "Menu name: " . $menu_name . "<br />";
+    echo "Position: " . $position . "<br />";
+    echo "Visible: " . $visible . "<br />";
+}
+
+//dont need this else statement but know is an option to use
+//else{
+//
+//    //redirect_to(url_for('/staff/subjects/new.php'));
+//}
+
+
 ;?>
 
 
@@ -32,10 +82,10 @@ if($test == '404'){
     <div class="subject edit">
         <h1>Edit Subject</h1>
 
-        <form action="" method="post">
+        <form action="<?php echo url_for('/staff/subjects/edit.php?id=') . h(u($id)); ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
-                <dd><input type="text" name="menu_name" value="" /></dd>
+                <dd><input type="text" name="menu_name" value="<?php echo $menu_name ;?>" /></dd>
             </dl>
             <dl>
                 <dt>Position</dt>
