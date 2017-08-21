@@ -14,4 +14,18 @@
         return $result;
     }
 
+    function find_all_pages(){
+        //want to make sure we bring in the $db variable form the global scope, modify it directly
+        global $db;
+
+        //this returns back the page set that we can work with
+        $sql = "SELECT * FROM pages ";
+        $sql.= "ORDER BY subject_id ASC, position ASC";
+        //echo $sql;
+        $result = mysqli_query($db,$sql);
+        //this custom function will confirm if we do get back a query
+        confirm_result_set($result);
+        return $result;
+    }
+
 ?>

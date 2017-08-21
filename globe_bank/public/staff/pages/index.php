@@ -4,13 +4,19 @@
 
 
 
-//this mimicks page data for the database
-$pages = [
-    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
-    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Consumer'],
-    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Small Business'],
-    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Commercial'],
-];
+////this mimicks page data for the database
+//$pages = [
+//    ['id' => '1', 'position' => '1', 'visible' => '1', 'menu_name' => 'About Globe Bank'],
+//    ['id' => '2', 'position' => '2', 'visible' => '1', 'menu_name' => 'Consumer'],
+//    ['id' => '3', 'position' => '3', 'visible' => '1', 'menu_name' => 'Small Business'],
+//    ['id' => '4', 'position' => '4', 'visible' => '1', 'menu_name' => 'Commercial'],
+//];
+
+
+//this returns back the pages set that we can work with
+$page_set = find_all_pages();
+
+
 ?>
 
 <?php $page_title = 'Pages'; ?>
@@ -28,6 +34,7 @@ $pages = [
         <table class="list">
             <tr>
                 <th>ID</th>
+                <th>Subject ID</th>
                 <th>Position</th>
                 <th>Visible</th>
                 <th>Name</th>
@@ -36,10 +43,16 @@ $pages = [
                 <th>&nbsp;</th>
             </tr>
 
-            <?php foreach($pages as $pages) { ?>
-        <!--used the h() custom method to make sure it is safe for html -->
+            <?php //this is used for the data pulled form actual database
+            while($pages = mysqli_fetch_assoc($page_set)){ ?>
+            <?php
+            //used for the mimicked data
+            //foreach($pages as $pages) { ?>
+
+            <!--used the h() custom method to make sure it is safe for html -->
             <tr>
                 <td><?php echo h($pages['id']); ?></td>
+                <td><?php echo h($pages['subject_id']); ?></td>
                 <td><?php echo h($pages['position']); ?></td>
                 <td><?php echo $pages['visible'] == 1 ? 'true' : 'false'; ?></td>
                 <td><?php echo h($pages['menu_name']); ?></td>
@@ -49,6 +62,11 @@ $pages = [
             </tr>
             <?php } ?>
         </table>
+
+        <?php
+        //this is used to free up memory where the query was stored , because it will not be used for the remainder of the program
+        mysqli_free_result($page_set);
+        ?>
 
     </div>
 </div>
