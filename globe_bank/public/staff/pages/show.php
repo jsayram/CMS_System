@@ -11,9 +11,9 @@ $id = isset($_GET['id']) ? $_GET['id']: '1' ;
 //same code as above but for php > 7.0
 //$id = $_GET['id'] ?? '1' ;
 
-//this show what 'id' was retrieved from the global $_GET variable
-//h is int the custom functions file so that no special characters are rendered
-//this is called escaping so that no special characters get through that could potentially hurt the system
+/* this show what 'id' was retrieved from the global $_GET variable h() is int the custom functions file so that no special characters are rendered
+-- this is called escaping so that no special characters get through that could potentially hurt the system */
+
 echo h($id);
 ?>
 

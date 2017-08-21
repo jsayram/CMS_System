@@ -17,11 +17,22 @@ if(is_post_request()){
     $position = isset($_POST['position']) ? $_POST['position']: '';
     $visible = isset($_POST['visible']) ? $_POST['visible']: '';
 
+    //send the data to the database using custom function
+    $result = insert_subject($menu_name,$position,$visible);
 
-    echo "Form parameters<br />";
-    echo "Menu name: " . $menu_name . "<br />";
-    echo "Position: " . $position . "<br />";
-    echo "Visible: " . $visible . "<br />";
+     //find out what that new id is
+     $new_id = mysqli_insert_id($db);
+     //redirect the user to the show.php page showcasing the new id
+     redirect_to(url_for('/staff/subjects/show.php?id=' . $new_id));
+
+
+/* code for displaying the values of database, used for testing*/
+//    echo "Form parameters<br />";
+//    echo "Menu name: " . $menu_name . "<br />";
+//    echo "Position: " . $position . "<br />";
+//    echo "Visible: " . $visible . "<br />";
+
+
 }else{
     redirect_to(url_for('/staff/subjects/new.php'));
 }
