@@ -23,6 +23,18 @@ require_once('../../../private/initialize.php');
     //}*/
 
 
+//find subjects in the database , and it will return all subjects to us
+$subject_set = find_all_subjects();
+
+//this will tell us how many rows there are , that will give us a subject count, but since we are adding a subject in this file (new.php) we will add +1
+$subject_count = mysqli_num_rows($subject_set) + 1;
+//free up memory
+mysqli_free_result($subject_set);
+
+
+$subject=[];
+//so the new position the subject is placed is by default subject count created above
+$subject["position"]= $subject_count;
 
 
 ;?>
@@ -46,9 +58,23 @@ require_once('../../../private/initialize.php');
             <dl>
                 <dt>Position</dt>
                 <dd>
+
+                    <select name="position">
+                        <?php
+                        for($i=1; $i <= $subject_count; $i++) {
+                            echo "<option value=\"{$i}\"";
+                            if($subject["position"] == $i) {
+                                echo " selected";
+                            }
+                            echo ">{$i}</option>";
+                        }
+                        ?>
+                    </select>
+<!--
                     <select name="position">
                         <option value="1">1</option>
                     </select>
+-->
                 </dd>
             </dl>
             <dl>

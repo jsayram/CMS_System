@@ -13,12 +13,14 @@ if(is_post_request()){
 
 
     //tenary operators used for php <7.0
-    $menu_name = isset($_POST['menu_name']) ? $_POST['menu_name']: '';
-    $position = isset($_POST['position']) ? $_POST['position']: '';
-    $visible = isset($_POST['visible']) ? $_POST['visible']: '';
+    $subject=[];
+
+    $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name']: '';
+    $subject['position'] = isset($_POST['position']) ? $_POST['position']: '';
+    $subject['visible'] = isset($_POST['visible']) ? $_POST['visible']: '';
 
     //send the data to the database using custom function
-    $result = insert_subject($menu_name,$position,$visible);
+    $result = insert_subject($subject);
 
      //find out what that new id is
      $new_id = mysqli_insert_id($db);

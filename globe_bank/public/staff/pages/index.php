@@ -45,20 +45,21 @@ $page_set = find_all_pages();
 
             <?php //this is used for the data pulled form actual database
             while($pages = mysqli_fetch_assoc($page_set)){ ?>
-            <?php
-            //used for the mimicked data
-            //foreach($pages as $pages) { ?>
+            <?php $subject = find_subject_by_id($pages['subject_id']); ?>
+
+            <?php//used for the mimicked data
+                //foreach($pages as $pages) { ;?>
 
             <!--used the h() custom method to make sure it is safe for html -->
             <tr>
                 <td><?php echo h($pages['id']); ?></td>
-                <td><?php echo h($pages['subject_id']); ?></td>
+                <td><?php echo h($subject['menu_name']); ?></td>
                 <td><?php echo h($pages['position']); ?></td>
                 <td><?php echo $pages['visible'] == 1 ? 'true' : 'false'; ?></td>
                 <td><?php echo h($pages['menu_name']); ?></td>
                 <td><a class="action" href="<?php echo url_for('/staff/pages/show.php?id=' . h(u($pages['id']))); ?>">View</a></td>
                 <td><a class="action" href="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($pages['id']))); ?>">Edit</a></td>
-                <td><a class="action" href="">Delete</a></td>
+                <td><a class="action" href="<?php echo url_for('/staff/pages/delete.php?id=' . h(u($pages['id']))); ?>">Delete</a></td>
             </tr>
             <?php } ?>
         </table>

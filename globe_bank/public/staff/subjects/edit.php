@@ -64,13 +64,20 @@ if(is_post_request()){
 
 }
 
-else{
+else{ //if is a GET request and not a post request
 
     //this returns an associative array to us that contains all the attributes we need for that subject
-    $subject = find_subject_by_id($id);
+    $subject = find_subject_by_id($id); // used to display the form
     //redirect_to(url_for('/staff/subjects/new.php'));
-}
 
+    //find subjects in the database , and it will return all subjects to us
+    $subject_set = find_all_subjects();
+
+    //this will tell us how many rows there are , that will give us a subject count
+    $subject_count = mysqli_num_rows($subject_set);
+    mysqli_free_result($subject_set);
+
+}
 
 ;?>
 
@@ -94,8 +101,21 @@ else{
                 <dt>Position</dt>
                 <dd>
                     <select name="position">
-                        <option value="1"<?php if($subject['position'] == "1") {echo " selected";} ?>>1</option>
+                        <?php
+                        for($i=1; $i <= $subject_count; $i++) {
+                            echo "<option value=\"{$i}\"";
+                            if($subject["position"] == $i) {
+                                echo " selected";
+                            }
+                            echo ">{$i}</option>";
+                        }
+                        ?>
                     </select>
+<!--
+                    <select name="position">
+                        <option value="1"<?php //if($subject['position'] == "1") {echo " selected";} ?>>1</option>
+                    </select>
+-->
                 </dd>
             </dl>
             <dl>

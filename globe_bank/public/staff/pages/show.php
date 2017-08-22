@@ -14,7 +14,13 @@ $id = isset($_GET['id']) ? $_GET['id']: '1' ;
 /* this show what 'id' was retrieved from the global $_GET variable h() is int the custom functions file so that no special characters are rendered
 -- this is called escaping so that no special characters get through that could potentially hurt the system */
 
-echo h($id);
+//for debuggin purposes shos the $id on the page
+//echo h($id);
+
+//this returns an associate array with all values in the database
+$page = find_page_by_id($id);
+
+
 ?>
 
 <?php $page_tittle = "Show Page" ;?>
@@ -23,14 +29,38 @@ echo h($id);
 <div id='content'>
     <a class='back-link' href="<?php echo url_for('/staff/pages/index.php') ;?>">&laquo; Back to List</a>
 
-    <div class= "page show">
+    <div class="page show">
 
-        Page ID: <?php echo h($id) ;?>
+        <h1>Page: <?php echo h($page['menu_name']); ?></h1>
+
+        <div class="attributes">
+            <?php $subject = find_subject_by_id($page['subject_id']); ?>
+            <dl>
+                <dt>Subject</dt>
+                <dd><?php echo h($subject['menu_name']); ?></dd>
+            </dl>
+            <dl>
+                <dt>Menu Name</dt>
+                <dd><?php echo h($page['menu_name']); ?></dd>
+            </dl>
+            <dl>
+                <dt>Position</dt>
+                <dd><?php echo h($page['position']); ?></dd>
+            </dl>
+            <dl>
+                <dt>Visible</dt>
+                <dd><?php echo $page['visible'] == '1' ? 'true' : 'false'; ?></dd>
+            </dl>
+            <dl>
+                <dt>Content</dt>
+                <dd><?php echo h($page['content']); ?></dd>
+            </dl>
+        </div>
 
     </div>
 
-    </div>
 </div>
+
 
 <?php include(SHARED_PATH . '/staff_fotter.php') ;?>
 
