@@ -39,18 +39,23 @@ if(is_post_request()){
     $page['content'] = isset($_POST['content']) ?$_POST['content']: '';
 
     $result = update_page($page);
-    redirect_to(url_for('/staff/pages/show.php?id=' . $id));
+    if($result === true){
+        redirect_to(url_for('/staff/pages/show.php?id=' . $id));
+    }else{
+        $errors = $result;
+    }
 
 
 }else{
 
     $page = find_page_by_id($id);
-
-    $page_set = find_all_pages();
-    $page_count = mysqli_num_rows($page_set);
-    mysqli_free_result($page_set);
-
 }
+
+/*Anything that the form needs in order to be able to render either when it first loads or when the page reloads because there were errors, we need to make sure that we provide to it. So that's the initialization at the errors array and it's also making sure that we have a subject count available.*/
+
+$page_set = find_all_pages();
+$page_count = mysqli_num_rows($page_set);
+mysqli_free_result($page_set);
 
 
 ;?>
@@ -66,6 +71,9 @@ if(is_post_request()){
 
     <div class="Page edit">
         <h1>Edit Page</h1>
+
+<!--dipay errors -->
+        <?php echo display_errors($errors) ;?>
 
         <form action="<?php echo url_for('/staff/pages/edit.php?id=' . h(u($id))); ?>" method="post">
             <dl>

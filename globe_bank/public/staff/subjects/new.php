@@ -22,6 +22,53 @@ require_once('../../../private/initialize.php');
     //    //echo 'No Error';
     //}*/
 
+if(is_post_request()){
+
+    // Handle form values sent by new.php
+
+    //tenary operators for can be used for php >-7.0
+    //$menu_name = $_POST['menu_name'] ?? '';
+    //$position = $_POST['position'] ?? '';
+    //$visible = $_POST['visible'] ?? '';
+
+
+    //tenary operators used for php <7.0
+    $subject=[];
+
+    $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name']: '';
+    $subject['position'] = isset($_POST['position']) ? $_POST['position']: '';
+    $subject['visible'] = isset($_POST['visible']) ? $_POST['visible']: '';
+
+    //send the data to the database using custom function
+    $result = insert_subject($subject);
+    if($result === true){
+        //find out what that new id is
+        $new_id = mysqli_insert_id($db);
+        //redirect the user to the show.php page showcasing the new id
+        redirect_to(url_for('/staff/subjects/show.php?id=' . $new_id));
+    }else{
+
+        $errors = $result;
+
+    }
+
+
+
+    /* code for displaying the values of database, used for testing*/
+    //    echo "Form parameters<br />";
+    //    echo "Menu name: " . $menu_name . "<br />";
+    //    echo "Position: " . $position . "<br />";
+    //    echo "Visible: " . $visible . "<br />";
+
+
+}else{
+
+    //else display the blank form
+
+   // redirect_to(url_for('/staff/subjects/new.php'));
+}
+
+
 
 //find subjects in the database , and it will return all subjects to us
 $subject_set = find_all_subjects();
@@ -49,8 +96,10 @@ $subject["position"]= $subject_count;
 
     <div class="subject new">
         <h1>Create Subject</h1>
+<!--DIPLAYING OUR ERRORS -->
+        <?php echo display_errors($errors) ;?>
 
-        <form action="<?php echo url_for('/staff/subjects/create.php') ;?>" method="post">
+        <form action="<?php echo url_for('/staff/subjects/new.php') ;?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
                 <dd><input type="text" name="menu_name" value="" /></dd>

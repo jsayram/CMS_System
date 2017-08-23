@@ -31,12 +31,18 @@ if(is_post_request()){
     $page['content'] = isset($_POST['content']) ?$_POST['content']: '';
 
     $result = insert_page($page);
-    $new_id = mysqli_insert_id($db);
-    redirect_to(url_for('/staff/pages/show.php?id=' . $new_id))
+
+    if($result === true) {
+        $new_id = mysqli_insert_id($db);
+        redirect_to(url_for('/staff/pages/show.php?id=' . $new_id));
+    }else{
+        $errors = $result;
+    }
 
 
 }else{
     //---settting default values here
+    //In the else clause, I'm instantiating new page here,
     $page = [];
     $page['subject_id'] = '';
     $page['menu_name'] = '';
@@ -44,11 +50,12 @@ if(is_post_request()){
     $page['visible'] = '';
     $page['content'] = '';
 
-    $page_set = find_all_pages();
-    $page_count = mysqli_num_rows($page_set)+1;
-    mysqli_free_result($page_set);
-
 }
+/* but I'm not doing all the find_all_pages business in there; I'm doing that afterwards to ensure that page count is available, so the form can render a list of positions appropriately.*/
+
+$page_set = find_all_pages();
+$page_count = mysqli_num_rows($page_set)+1;
+mysqli_free_result($page_set);
 
 
 ;?>
@@ -65,6 +72,9 @@ if(is_post_request()){
     <div class="subject new">
         <h1>Create Page</h1>
 
+<!--        Diplaying errors for form-->
+        <?php echo display_errors($errors) ;?>
+,kµ∆
         <form action="<?php echo url_for('/staff/pages/new.php'); ?>" method="post">
             <dl>
                 <dt>Subject</dt>

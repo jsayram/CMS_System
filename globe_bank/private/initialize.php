@@ -33,8 +33,17 @@
   //this makes sure we have access the the query functions
   require_once('query_functions.php');
 
+    //this makes sure we have access the the query functions
+    require_once('validation_functions.php');
+
 /*It means that any time any page loads initialize.php, it's going to load in all those database functions and initiate the first connection to the database. And then, I have this variable db available to me that I can use to work with. And so db is going to be the thing I use to connect and to make queries on from then on.*/
   $db = db_connect();
+
+//variable for the errors array displayed
+  $errors = [];
+
+
+
 
 //check the footer for the db_disconnect function
 

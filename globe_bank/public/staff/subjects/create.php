@@ -21,11 +21,17 @@ if(is_post_request()){
 
     //send the data to the database using custom function
     $result = insert_subject($subject);
+    if($result === true){
+        //find out what that new id is
+        $new_id = mysqli_insert_id($db);
+        //redirect the user to the show.php page showcasing the new id
+        redirect_to(url_for('/staff/subjects/show.php?id=' . $new_id));
+    }else{
 
-     //find out what that new id is
-     $new_id = mysqli_insert_id($db);
-     //redirect the user to the show.php page showcasing the new id
-     redirect_to(url_for('/staff/subjects/show.php?id=' . $new_id));
+      $error = $result;
+
+    }
+
 
 
 /* code for displaying the values of database, used for testing*/

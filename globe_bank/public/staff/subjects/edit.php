@@ -59,8 +59,17 @@ if(is_post_request()){
 
     //update the subject if there is no errors
     $result = update_subject($subject);
-    //redirect to go back to show.php to look at the work of what was just editied and we need the id
-    redirect_to(url_for('/staff/subjects/show.php?id=' . $id ));
+
+    if($result === true){
+        //redirect to go back to show.php to look at the work of what was just editied and we need the id
+        redirect_to(url_for('/staff/subjects/show.php?id=' . $id ));
+    }else{
+        $errors = $result;
+        //this displays the errors on the screen good for debugging
+        //var_dump($errors);
+    }
+
+
 
 }
 
@@ -91,6 +100,10 @@ else{ //if is a GET request and not a post request
 
     <div class="subject edit">
         <h1>Edit Subject</h1>
+
+<!--       DISPLAYING THE ERRORS -->
+       <?php echo display_errors($errors) ;?>
+
 
         <form action="<?php echo url_for('/staff/subjects/edit.php?id=') . h(u($id)); ?>" method="post">
             <dl>
